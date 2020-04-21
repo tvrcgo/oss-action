@@ -21,7 +21,7 @@
 ```yaml
 - name: Upload to oss
   id: upload_to_oss
-  uses: actions/upload-to-oss@v0.1
+  uses: tvrcgo/upload-to-oss@v0.1.1
   with:
     key-id: ${{ secrets.OSS_KEY_ID }}
     key-secret: ${{ secrets.OSS_KEY_SECRET }}
