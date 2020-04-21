@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "ncc build src/index.js -m"
+  },
   "keywords": [],
   "author": "tvrcgo",
   "license": "ISC",
   "dependencies": {
     "@actions/core": "^1.2.3",
     "@actions/github": "^2.1.1",
+    "@zeit/ncc": "^0.22.1",
     "ali-oss": "^6.6.0"
   }
 }
