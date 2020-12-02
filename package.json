@@ -13,6 +13,7 @@
     "@actions/core": "^1.2.3",
     "@actions/github": "^2.1.1",
     "@zeit/ncc": "^0.22.1",
-    "ali-oss": "^6.6.0"
+    "ali-oss": "^6.6.0",
+    "fast-glob": "^3.2.4"
   }
 }

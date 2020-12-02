@@ -4,6 +4,7 @@ const github = require('@actions/github');
 const OSS = require('ali-oss');
 const fs = require('fs');
 const { resolve } = require('path');
+const fg = require('fast-glob')
 
 (async () => {
   try {
@@ -27,12 +28,11 @@ const { resolve } = require('path');
       }
       // upload dir
       if (stat.isDirectory()) {
-        const files = fs.readdirSync(resolve(assetPath))
+        const files = fg.sync(`${assetPath}/**`, { dot: false, onlyFiles: true })
         const res = await Promise.all(
-          files.filter(f => fs.lstatSync(resolve(assetPath, f)).isFile())
-            .map(file => {
-              return oss.put(`${targetPath}/${file}`, resolve(assetPath, file))
-            })
+          files.map(file => {
+            return oss.put(`${targetPath}/${file}`, resolve(assetPath, file))
+          })
         )
         core.setOutput('url', res.map(r => r.url).join(','))
       }
