@@ -31,7 +31,8 @@ const fg = require('fast-glob');
         const files = fg.sync(`${assetPath}/**`, { dot: false, onlyFiles: true })
         const res = await Promise.all(
           files.map(file => {
-            return oss.put(`${targetPath}/${file}`, resolve(assetPath, file))
+            const filename = file.replace(`${assetPath}/`, '')
+            return oss.put(`${targetPath}/${filename}`, resolve(file))
           })
         )
         core.setOutput('url', res.map(r => r.url).join(','))
