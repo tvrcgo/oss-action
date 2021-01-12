@@ -8,12 +8,21 @@ const fg = require('fast-glob');
 
 (async () => {
   try {
-    const oss = new OSS({
-      region: core.getInput('region'),
+    const opts = {
       accessKeyId: core.getInput('key-id'),
       accessKeySecret: core.getInput('key-secret'),
       bucket: core.getInput('bucket')
-    })
+    }
+
+    ;['region', 'endpoint']
+      .filter(name => core.getInput(name))
+      .forEach(name => {
+        Object.assign(opts, {
+          [name]: core.getInput(name)
+        })
+      })
+
+    const oss = new OSS(opts)
 
     const assetPath = core.getInput('asset-path', { required: true }).replace(/\/+$/g, '')
     const targetPath = core.getInput('target-path', { required: true }).replace(/\/+$/g, '')

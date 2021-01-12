@@ -6,7 +6,9 @@ branding:
   color: 'yellow'
 inputs:
   region:
-    required: true
+    required: false
+  endpoint:
+    required: false
   key-id:
     required: true
   key-secret:
