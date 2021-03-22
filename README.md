@@ -22,7 +22,7 @@
 ```yaml
 - name: Upload to oss
   id: upload_to_oss
-  uses: tvrcgo/upload-to-oss@v0.1.1
+  uses: tvrcgo/upload-to-oss@master
   with:
     key-id: ${{ secrets.OSS_KEY_ID }}
     key-secret: ${{ secrets.OSS_KEY_SECRET }}
