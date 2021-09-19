@@ -8,6 +8,7 @@ const fg = require('fast-glob');
 
 (async () => {
   try {
+    // OSS 实例化
     const opts = {
       accessKeyId: core.getInput('key-id'),
       accessKeySecret: core.getInput('key-secret'),
@@ -24,27 +25,31 @@ const fg = require('fast-glob');
 
     const oss = new OSS(opts)
 
-    const assetPath = core.getInput('asset-path', { required: true })
-    const targetPath = core.getInput('target-path', { required: true })
+    // 上传资源
+    const assets = core.getInput('assets', { required: true })
 
-    const files = fg.sync([].concat(assetPath), { dot: false, onlyFiles: true })
+    assets.forEach(async rule => {
+      const [src, dst] = rule.split(':')
 
-    if (files.length && !/\/$/.test(targetPath)) {
-      // 单文件
-      const res = await oss.put(targetPath, resolve(files[0]))
-      core.setOutput('url', res.url)
-    } else if (files.length && /\/$/.test(targetPath)) {
-      // 目录
-      const res = await Promise.all(
-        files.map(file => {
-          const filename = resolve(file).replace(resolve('.') + '/', '')
-          return oss.put(`${targetPath.replace(/\/+$/g, '')}/${filename}`, resolve(file))
-        })
-      )
-      core.setOutput('url', res.map(r => r.url).join(','))
-    } else {
-      core.setFailed('assets not found.')
-    }
+      const files = fg.sync([src], { dot: false, onlyFiles: true })
+
+      if (files.length && !/\/$/.test(dst)) {
+        // 单文件
+        const res = await oss.put(dst, resolve(files[0]))
+        core.setOutput('url', res.url)
+      } else if (files.length && /\/$/.test(dst)) {
+        // 目录
+        const res = await Promise.all(
+          files.map(file => {
+            const base = src.replace(/\*+$/g, '')
+            const filename = file.replace(base, '')
+            return oss.put(`${dst}${filename}`, resolve(file))
+          })
+        )
+        core.setOutput('url', res.map(r => r.url).join(','))
+      }
+    })
+
   } catch (err) {
     core.setFailed(err.message)
   }

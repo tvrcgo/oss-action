@@ -15,9 +15,7 @@ inputs:
     required: true
   bucket:
     required: true
-  asset-path:
-    required: true
-  target-path:
+  assets:
     required: true
 outputs:
   url:
