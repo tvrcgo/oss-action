@@ -27,7 +27,7 @@ const fg = require('fast-glob');
     const assetPath = core.getInput('asset-path', { required: true })
     const targetPath = core.getInput('target-path', { required: true }).replace(/\/+$/g, '')
 
-    const files = fs.sync([].concat(assetPath), { dot: false, onlyFiles: true })
+    const files = fg.sync([].concat(assetPath), { dot: false, onlyFiles: true })
 
     if (files.length > 1) {
       const res = await Promise.all(
