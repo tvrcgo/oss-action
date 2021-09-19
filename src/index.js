@@ -28,7 +28,7 @@ const fg = require('fast-glob');
     // 上传资源
     const assets = core.getInput('assets', { required: true })
 
-    assets.forEach(async rule => {
+    assets.split('\n').forEach(async rule => {
       const [src, dst] = rule.split(':')
 
       const files = fg.sync([src], { dot: false, onlyFiles: true })
