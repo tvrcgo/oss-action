@@ -24,30 +24,24 @@ const fg = require('fast-glob');
 
     const oss = new OSS(opts)
 
-    const assetPath = core.getInput('asset-path', { required: true }).replace(/\/+$/g, '')
+    const assetPath = core.getInput('asset-path', { required: true })
     const targetPath = core.getInput('target-path', { required: true }).replace(/\/+$/g, '')
 
-    if (fs.existsSync(assetPath)) {
-      const stat = fs.lstatSync(assetPath)
-      // upload file
-      if (stat.isFile()) {
-        const filename = assetPath.slice(assetPath.lastIndexOf('/') + 1)
-        const res = await oss.put(targetPath, assetPath)
-        core.setOutput('url', res.url)
-      }
-      // upload dir
-      if (stat.isDirectory()) {
-        const files = fg.sync(`${assetPath}/**`, { dot: false, onlyFiles: true })
-        const res = await Promise.all(
-          files.map(file => {
-            const filename = file.replace(`${assetPath}/`, '')
-            return oss.put(`${targetPath}/${filename}`, resolve(file))
-          })
-        )
-        core.setOutput('url', res.map(r => r.url).join(','))
-      }
+    const files = fs.sync([].concat(assetPath), { dot: false, onlyFiles: true })
+
+    if (files.length > 1) {
+      const res = await Promise.all(
+        files.map(file => {
+          const filename = resolve(file).replace(resolve('.') + '/', '')
+          return oss.put(`${targetPath}/${filename}`, resolve(file))
+        })
+      )
+      core.setOutput('url', res.map(r => r.url).join(','))
+    } else if(files.length === 1) {
+      const res = await oss.put(targetPath, resolve(files[0]))
+      core.setOutput('url', res.url)
     } else {
-      core.setFailed('asset_path does not exist.')
+      core.setFailed('assets not exist.')
     }
   } catch (err) {
     core.setFailed(err.message)
