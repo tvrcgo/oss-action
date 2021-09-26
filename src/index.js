@@ -40,7 +40,7 @@ const fg = require('fast-glob');
       } else if (files.length && /\/$/.test(dst)) {
         // 目录
         const res = await Promise.all(
-          files.map(file => {
+          files.map(async file => {
             const base = src.replace(/\*+$/g, '')
             const filename = file.replace(base, '')
             return oss.put(`${dst}${filename}`, resolve(file))
