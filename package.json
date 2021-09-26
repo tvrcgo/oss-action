@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "build": "ncc build src/index.js -m -o lib"
+    "build": "ncc build src/index.js -m -o lib -w"
   },
   "keywords": [],
   "author": "tvrcgo",
