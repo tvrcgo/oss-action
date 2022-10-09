@@ -43,7 +43,9 @@ const fg = require('fast-glob');
           files.map(async file => {
             const base = src.replace(/\*+$/g, '')
             const filename = file.replace(base, '')
-            return oss.put(`${dst}${filename}`, resolve(file))
+            return oss.put(`${dst}${filename}`, resolve(file)).catch(err => {
+              core.setFailed(err && err.message)
+            })
           })
         )
         core.setOutput('url', res.map(r => r.url).join(','))
