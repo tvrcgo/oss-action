@@ -43,7 +43,9 @@ const fg = require('fast-glob');
           files.map(async file => {
             const base = src.replace(/\*+$/g, '')
             const filename = file.replace(base, '')
-            return oss.put(`${dst}${filename}`, resolve(file)).catch(err => {
+            return oss.put(`${dst}${filename}`, resolve(file), {
+              timeout: 1000*60*10
+            }).catch(err => {
               core.setFailed(err && err.message)
             })
           })
