@@ -11,7 +11,7 @@
   "author": "tvrcgo",
   "license": "ISC",
   "dependencies": {
-    "@actions/core": "^1.2.3",
+    "@actions/core": "^1.10.0",
     "@actions/github": "^2.1.1",
     "@vercel/ncc": "^0.25.1",
     "ali-oss": "^6.6.0",
