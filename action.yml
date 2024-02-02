@@ -21,5 +21,5 @@ outputs:
   url:
     description: oss url
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'lib/index.js'
