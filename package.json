@@ -1,5 +1,5 @@
 {
-  "name": "upload-to-oss",
+  "name": "oss-action",
   "version": "0.3.0",
   "description": "",
   "main": "lib/index.js",

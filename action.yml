@@ -1,5 +1,5 @@
 
-name: 'Upload to OSS'
+name: 'OSS Action'
 description: 'Upload assets to aliyun OSS'
 branding:
   icon: 'upload-cloud'

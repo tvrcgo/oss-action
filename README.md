@@ -1,5 +1,5 @@
 
-# Upload to OSS
+# OSS Action
 
 上传单个文件或文件夹所有文件到 OSS
 
@@ -21,7 +21,7 @@
 ```yaml
 - name: Upload to oss
   id: upload_to_oss
-  uses: tvrcgo/upload-to-oss@master
+  uses: tvrcgo/oss-action@master
   with:
     key-id: ${{ secrets.OSS_KEY_ID }}
     key-secret: ${{ secrets.OSS_KEY_SECRET }}
