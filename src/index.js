@@ -39,12 +39,13 @@ const fg = require('fast-glob');
         core.setOutput('url', res.url)
       } else if (files.length && /\/$/.test(dst)) {
         // 目录
+        const timeout = core.getInput('timeout')
         const res = await Promise.all(
           files.map(async file => {
             const base = src.replace(/\*+$/g, '')
             const filename = file.replace(base, '')
             return oss.put(`${dst}${filename}`, resolve(file), {
-              timeout: 1000*60*10
+              timeout: 1000 * Number(timeout)
             }).catch(err => {
               core.setFailed(err && err.message)
             })

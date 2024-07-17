@@ -11,6 +11,7 @@
 - `endpoint`: 优先级高于 region，可填写内网节点、加速节点，和 region 二选一
 - `bucket`: Bucket 名称
 - `assets`: 上传的资源。每行一条规则，格式：`源路径:目标路径`
+- `timeout`: 超时时间（可选），默认 600，单位：秒
 
 ## Outputs
 

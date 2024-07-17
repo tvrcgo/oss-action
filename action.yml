@@ -17,6 +17,9 @@ inputs:
     required: true
   assets:
     required: true
+  timeout:
+    required: false
+    default: 600
 outputs:
   url:
     description: oss url
